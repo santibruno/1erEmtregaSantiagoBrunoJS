@@ -9,7 +9,7 @@ function agregarProduto(productos){
         valor=parseInt(prompt("Ingrese un valor $$$ valido"))
     }
     let color = prompt("Ingrese un color")
-    while (!isNaN(color)){// Tal vez podria hacerse un array de colores validos y recorrerlo para verificar que no se coloque cualquier cosa 
+    while (!isNaN(color)){
         color = prompt("Ingrese un color valido")
     }
     let stock = parseInt(prompt("Ingrese el stock de su producto"))
@@ -40,8 +40,20 @@ function agregarStock(productos){
 }
 
 function borrarProducto(productos){
-//borrar producto
+    
+    const nombresProd=productos.map(producto=>producto.nombre)
+    while (nombresProd){
+        const eleccion = prompt(`Que producto desea eliminar \n ${nombresProd}`)       
+        
+        if (productos.find(producto=>producto.nombre===eleccion.toUpperCase())){
+            return productos.filter(producto1=>producto1.nombre!==eleccion.toUpperCase())
+        } else {
+            alert("Producto Invalido")
+        }        
+    }
+    
 }
+     
 function disminuirStock(productos){
     const nombresProd=productos.map(producto=>producto.nombre)
     while (nombresProd){
@@ -58,6 +70,40 @@ function disminuirStock(productos){
         } else {
             alert("Producto Invalido")
         }        
+    }
+}
+function calcularCuotas(cantidad,valor){
+    const impuesto = 0.05*cantidad + 1
+    return (valor*impuesto)/cantidad
+}
+function menuEleccion(menu = parseInt(prompt("Ingrese que quiere realizar: \n1:Agregar Producto \n2:Agregar stock \n3:Borrar Producto \n4:Descontar Stock \n5:Calcular Cuotas"))){
+    switch (menu){
+        case 1:
+            agregarProduto(productos)
+            alert("Se agrego el producto correctamente")
+            break
+        case 2:
+            agregarStock(productos)
+            alert("Se modifico el stock correctamente")
+            break
+        case 3:
+            productos=borrarProducto(productos)
+            alert("Se elimino el producto correctamente")
+            break
+        case 4:
+            disminuirStock(productos)
+            alert("Se modifico el stock correctamente")
+            const a= confirm("desea Realizar otra operacion?")
+            if (a){
+                menuEleccion()
+            }
+            break
+        
+        default:
+            alert("Opcion incorrecta, elegir opcion valida")  
+            
+            menuEleccion(menu = parseInt(prompt("Ingrese que quiere realizar: \n1:Agregar Producto \n2:Agregar stock \n3:Borrar Producto \n4:Descontar Stock \n5:Calcular Cuotas")))
+    
     }
 }
 
@@ -78,26 +124,17 @@ class Producto {
 let productos=[]
 const iva= 1.21
 
-
 productos.push(new Producto ("Remera con estampa", "1", "500","negra","9"),new Producto ("Remera lisa", "1", "300","blanca","5"),new Producto ("Jean skinny", "2", "1200","azul", "2"))
-switch (menu = parseInt(prompt("Ingrese que quiere realizar: \n1:Agregar Producto \n2:Agregar stock \n3:Borrar Producto \n4:Descontar Stock \n5:Calcular Cuotas"))){
-    case 1:
-        agregarProduto(productos)
-        break
-    case 2:
-        agregarStock(productos)
-        alert("Se agrego el stock correctamente")
-        break
-    case 3:
-        borrarProducto(productos)
-        break
-    case 4:
-        disminuirStock(productos)
-        break
 
-}
+
+//const menu = parseInt(prompt("Ingrese que quiere realizar: \n1:Agregar Producto \n2:Agregar stock \n3:Borrar Producto \n4:Descontar Stock \n5:Calcular Cuotas"))
 
 
 
 
 
+
+
+
+
+ 
